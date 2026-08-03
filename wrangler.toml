@@ -1,0 +1,15 @@
+name = "fishinglog-ai-site"
+compatibility_date = "2026-08-01"
+pages_build_output_dir = "."
+
+# Static site via Cloudflare Pages
+# Deploy: npx wrangler pages deploy . --project-name fishinglog-ai-site
+
+# Optional: KV namespace for beta signups
+# [[kv_namespaces]]
+# binding = "SIGNUPS"
+# id = "your-kv-namespace-id"
+
+[vars]
+SITE_NAME = "fishinglog.ai"
+BETA_STATUS = "closed"
