@@ -1,6 +1,22 @@
 // Cloudflare Pages Function — /api/signup
 // Handles beta signup form POST requests
 
+// GET: return API info (useful for health checks)
+export async function onRequestGet() {
+  return new Response(JSON.stringify({
+    endpoint: '/api/signup',
+    method: 'POST',
+    description: 'Beta signup form handler'
+  }), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    }
+  });
+}
+
+// POST: handle signup
 export async function onRequestPost({ request, env }) {
   try {
     const body = await request.json();

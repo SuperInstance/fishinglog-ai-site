@@ -25,6 +25,14 @@
 
 // Intersection Observer for fade-up animations
 (function () {
+  // Skip animations if user prefers reduced motion
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.feature-card, .price-card, .arch-step').forEach(function (el) {
+      el.style.opacity = '1';
+    });
+    return;
+  }
+
   var observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
@@ -90,11 +98,16 @@
           success.style.display = 'block';
           form.reset();
         } else {
-          throw new Error('Server error');
+          // Try to read server's error message
+          return res.json().then(function (body) {
+            showError(body.error || 'Server error. Please try again.');
+          }).catch(function () {
+            showError('Server error. Please try again.');
+          });
         }
       })
       .catch(function () {
-        // Fallback: try mailto
+        // Network error or fetch failure
         error.style.display = 'block';
       })
       .finally(function () {
